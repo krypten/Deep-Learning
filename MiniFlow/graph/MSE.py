@@ -29,4 +29,18 @@ class MSE(Node):
         # an elementwise subtraction as expected.
         y = self.inbound_nodes[0].value.reshape(-1, 1)
         a = self.inbound_nodes[1].value.reshape(-1, 1)
-        self.value = np.mean(np.square(y - a))
+
+        self.m = self.inbound_nodes[0].value.shape[0]
+        # Save the computed output for backward.
+        self.diff = y - a
+        self.value = np.mean(np.square(self.diff))
+
+    def backward(self):
+        """
+        Calculates the gradient of the cost.
+
+        This is the final node of the network so outbound nodes
+        are not a concern.
+        """
+        self.gradients[self.inbound_nodes[0]] = (2 / self.m) * self.diff
+        self.gradients[self.inbound_nodes[1]] = (-2 / self.m) * self.diff

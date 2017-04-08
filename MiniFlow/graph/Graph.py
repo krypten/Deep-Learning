@@ -1,4 +1,6 @@
 from Input import Input
+
+
 ##
 # TODO(krypten): Add documentation.
 ##
@@ -64,7 +66,24 @@ class Graph(object):
             # topological_sort the graph nodes
             raise NotImplemented
 
+        # Forward pass
         for n in sorted_nodes:
             n.forward()
 
-        return output_node.value
+    @staticmethod
+    def forward_and_backward(output_node, sorted_nodes):
+        """
+        Performs a forward and backward pass through a list of sorted nodes.
+
+        Arguments:
+
+            `output_node`: The output node of the graph (no outgoing edges).
+            `sorted_nodes`: a topologically sorted list of nodes.
+
+        Returns the output node's value
+        """
+        Graph.forward_pass(output_node, sorted_nodes)
+
+        # Backward pass
+        for n in sorted_nodes[::-1]:
+            n.backward()
