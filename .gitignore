@@ -1,3 +1,10 @@
 # Ignore idea files
 .idea/
 
+# ipynb_checkpoints
+.ipynb_checkpoints
+*/.ipynb_checkpoints
+__pycache__
+
+# Checkpoint folder
+*/checkpoints/*
